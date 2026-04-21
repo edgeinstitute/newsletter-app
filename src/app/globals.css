@@ -1,26 +1,280 @@
 @import "tailwindcss";
+@source not "../../.agents";
+
+/* =========================================================================
+   Editorial neutral design system — off-white + near-black
+   ========================================================================= */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces */
+  --surface: #fafaf9;
+  --surface-muted: #f4f4f2;
+  --surface-elevated: #ffffff;
+  --surface-strong: #ebebe8;
+  --surface-inverse: #0a0a0a;
+
+  /* Borders */
+  --border: #e4e4e0;
+  --border-subtle: #efefec;
+
+  /* Text */
+  --foreground: #0a0a0a;
+  --text-secondary: #525252;
+  --text-muted: #737373;
+  --text-inverse: #fafaf9;
+
+  /* Primary — near-black (editorial) */
+  --primary: #0a0a0a;
+  --primary-50: #f4f4f2;
+  --primary-200: #d4d4d0;
+  --primary-600: #262626;
+  --primary-700: #404040;
+
+  /* Success — emerald */
+  --success: #16a34a;
+  --success-50: #ecfdf5;
+  --success-200: #bbf7d0;
+  --success-600: #15803d;
+  --success-700: #166534;
+
+  /* Danger — red */
+  --danger: #dc2626;
+  --danger-50: #fef2f2;
+  --danger-200: #fecaca;
+  --danger-600: #b91c1c;
+  --danger-700: #991b1b;
+
+  /* Warning — amber */
+  --warning: #d97706;
+  --warning-50: #fffbeb;
+  --warning-200: #fde68a;
+  --warning-600: #b45309;
+  --warning-700: #92400e;
+
+  /* Info — blue */
+  --info: #2563eb;
+  --info-50: #eff6ff;
+  --info-200: #bfdbfe;
+  --info-600: #1d4ed8;
+  --info-700: #1e40af;
+
+  /* Gray — neutral */
+  --gray: #737373;
+  --gray-50: #f5f5f5;
+  --gray-200: #d4d4d4;
+  --gray-600: #525252;
+  --gray-700: #404040;
+
+  /* Shadows — layered for depth over hard borders */
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.06), 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.06), 0 2px 4px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 10px 25px rgb(0 0 0 / 0.08), 0 4px 10px rgb(0 0 0 / 0.04);
+}
+
+.dark {
+  --surface: #0a0a0a;
+  --surface-muted: #111111;
+  --surface-elevated: #171717;
+  --surface-strong: #1f1f1f;
+  --surface-inverse: #fafaf9;
+
+  --border: #262626;
+  --border-subtle: #1a1a1a;
+
+  --foreground: #fafaf9;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
+  --text-inverse: #0a0a0a;
+
+  --primary: #fafaf9;
+  --primary-50: #171717;
+  --primary-200: #404040;
+  --primary-600: #e5e5e5;
+  --primary-700: #d4d4d4;
+
+  --success: #22c55e;
+  --success-50: #0a1f13;
+  --success-200: #14532d;
+  --success-600: #4ade80;
+  --success-700: #86efac;
+
+  --danger: #ef4444;
+  --danger-50: #1f0a0a;
+  --danger-200: #7f1d1d;
+  --danger-600: #f87171;
+  --danger-700: #fca5a5;
+
+  --warning: #f59e0b;
+  --warning-50: #1f1505;
+  --warning-200: #78350f;
+  --warning-600: #fbbf24;
+  --warning-700: #fcd34d;
+
+  --info: #3b82f6;
+  --info-50: #0a1124;
+  --info-200: #1e3a8a;
+  --info-600: #60a5fa;
+  --info-700: #93c5fd;
+
+  --gray: #a3a3a3;
+  --gray-50: #171717;
+  --gray-200: #404040;
+  --gray-600: #d4d4d4;
+  --gray-700: #e5e5e5;
+
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.5), 0 1px 2px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.6), 0 2px 4px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 10px 25px rgb(0 0 0 / 0.7), 0 4px 10px rgb(0 0 0 / 0.4);
 }
 
 @theme inline {
-  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-strong: var(--surface-strong);
+  --color-surface-inverse: var(--surface-inverse);
+
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+
+  --color-primary: var(--primary);
+  --color-primary-50: var(--primary-50);
+  --color-primary-200: var(--primary-200);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+
+  --color-success: var(--success);
+  --color-success-50: var(--success-50);
+  --color-success-200: var(--success-200);
+  --color-success-600: var(--success-600);
+  --color-success-700: var(--success-700);
+
+  --color-danger: var(--danger);
+  --color-danger-50: var(--danger-50);
+  --color-danger-200: var(--danger-200);
+  --color-danger-600: var(--danger-600);
+  --color-danger-700: var(--danger-700);
+
+  --color-warning: var(--warning);
+  --color-warning-50: var(--warning-50);
+  --color-warning-200: var(--warning-200);
+  --color-warning-600: var(--warning-600);
+  --color-warning-700: var(--warning-700);
+
+  --color-info: var(--info);
+  --color-info-50: var(--info-50);
+  --color-info-200: var(--info-200);
+  --color-info-600: var(--info-600);
+  --color-info-700: var(--info-700);
+
+  --color-gray: var(--gray);
+  --color-gray-50: var(--gray-50);
+  --color-gray-200: var(--gray-200);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+
+  --font-sans: var(--font-sans-family);
+  --font-display: var(--font-display-family);
+
+  --radius-xs: 0.375rem;
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --animate-fade-in-up: fade-in-up 0.35s ease-out both;
+  --animate-fade-in: fade-in 0.25s ease-out both;
+  --animate-slide-in-right: slide-in-right 0.3s ease-out both;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+html,
 body {
-  background: var(--background);
+  background: var(--surface);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans-family), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv11";
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+  letter-spacing: -0.015em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.font-display {
+  font-family: var(--font-display-family), "DM Serif Display", Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* iOS Safari: prevent input zoom on focus (threshold is 16px) */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Restore pointer cursor on interactive buttons (Tailwind v4 defaults to `default`) */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"][aria-disabled="true"] {
+  cursor: not-allowed;
 }
