@@ -128,8 +128,9 @@ export function MediaView({ items, total, page, totalPages, perPage, filter, new
     }
   };
 
-  const sidebarOption = (label: string, active: boolean, href: string) => (
+  const sidebarOption = (label: string, active: boolean, href: string, key?: string) => (
     <Link
+      key={key}
       href={href}
       scroll={false}
       className={`flex w-full items-center rounded-xs px-3 py-2 text-left text-sm transition ${
@@ -168,7 +169,7 @@ export function MediaView({ items, total, page, totalPages, perPage, filter, new
         {newsletters.length === 0 && (
           <div className="text-text-muted px-3 py-2 text-xs">Nu există newsletters încă.</div>
         )}
-        {newsletters.map((n) => sidebarOption(n.title, filter === n.id, buildHref(n.id, 1)))}
+        {newsletters.map((n) => sidebarOption(n.title, filter === n.id, buildHref(n.id, 1), n.id))}
       </aside>
 
       <section className="flex flex-col gap-4">

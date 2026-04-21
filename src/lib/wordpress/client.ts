@@ -189,10 +189,14 @@ export async function listWpMedia(
   const perPage = Math.min(Math.max(opts.perPage ?? 16, 1), 100);
   const page = Math.max(opts.page ?? 1, 1);
   const searchParam = opts.search ? `&search=${encodeURIComponent(opts.search)}` : "";
-  const url = `${baseUrl(cfg)}/wp-json/wp/v2/media?media_type=image&per_page=${perPage}&page=${page}&orderby=date&order=desc${searchParam}`;
+  const url = `${baseUrl(cfg)}/wp-json/wp/v2/media?media_type=image&per_page=${perPage}&page=${page}&orderby=date&order=desc${searchParam}&_=${Date.now()}`;
   const res = await fetch(url, {
     method: "GET",
-    headers: { Authorization: basicAuth(cfg) },
+    headers: {
+      Authorization: basicAuth(cfg),
+      "Cache-Control": "no-cache",
+      Pragma: "no-cache",
+    },
     cache: "no-store",
   });
   if (res.status === 400) {

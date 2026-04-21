@@ -264,6 +264,7 @@ export function NewsletterEditor({ initial, beehiivConfigured }: Props) {
                 <BlockAddMenu onInsert={(type) => insertBlock(type, idx)} compact />
                 <BlockFrame
                   block={block}
+                  newsletterId={initial.id}
                   first={idx === 0}
                   last={idx === content.length - 1}
                   onChange={(updated) => updateBlock(block.id, () => updated)}
@@ -300,16 +301,28 @@ type BlockControls = {
 
 function BlockFrame({
   block,
+  newsletterId,
   onChange,
   ...controls
-}: { block: Block; onChange: (block: Block) => void } & BlockControls) {
+}: {
+  block: Block;
+  newsletterId: string;
+  onChange: (block: Block) => void;
+} & BlockControls) {
   switch (block.type) {
     case "heading":
       return <HeadingBlockEditor block={block} onChange={onChange} {...controls} />;
     case "paragraph":
       return <ParagraphBlockEditor block={block} onChange={onChange} {...controls} />;
     case "image":
-      return <ImageBlockEditor block={block} onChange={onChange} {...controls} />;
+      return (
+        <ImageBlockEditor
+          block={block}
+          newsletterId={newsletterId}
+          onChange={onChange}
+          {...controls}
+        />
+      );
     case "button":
       return <ButtonBlockEditor block={block} onChange={onChange} {...controls} />;
     case "divider":
