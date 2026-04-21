@@ -25,6 +25,20 @@ export default async function DashboardOverviewPage() {
         />
         {isAdmin && (
           <Card
+            title="Newsletters"
+            description="Compune newsletters și trimite-le în beehiiv ca draft."
+            href="/newsletters"
+          />
+        )}
+        {isAdmin && (
+          <Card
+            title="Media"
+            description="Încarcă imagini în WordPress și asociază-le cu newsletter-ele."
+            href="/media"
+          />
+        )}
+        {isAdmin && (
+          <Card
             title="Echipă"
             description="Administrează membrii, rolurile și accesul."
             href="/users"

@@ -2,7 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HomeIcon, UsersIcon, UserIcon, SettingsIcon } from "@/components/icons";
+import {
+  HomeIcon,
+  UsersIcon,
+  UserIcon,
+  SettingsIcon,
+  MailIcon,
+  ImageIcon,
+} from "@/components/icons";
 import type { ProfileRole } from "@/lib/supabase/database.types";
 
 type NavItem = {
@@ -14,6 +21,8 @@ type NavItem = {
 
 const items: NavItem[] = [
   { href: "/dashboard", label: "Panou", icon: HomeIcon },
+  { href: "/newsletters", label: "Newsletters", icon: MailIcon, adminOnly: true },
+  { href: "/media", label: "Media", icon: ImageIcon, adminOnly: true },
   { href: "/users", label: "Echipă", icon: UsersIcon, adminOnly: true },
   { href: "/settings", label: "Setări", icon: SettingsIcon, adminOnly: true },
   { href: "/profile", label: "Profil", icon: UserIcon },

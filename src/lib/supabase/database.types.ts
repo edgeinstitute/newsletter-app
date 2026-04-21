@@ -1,5 +1,7 @@
 export type ProfileRole = "admin" | "staff" | "viewer";
 
+export type NewsletterStatus = "draft" | "syncing" | "synced" | "failed";
+
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 export interface Database {
@@ -56,11 +58,57 @@ export interface Database {
         };
         Relationships: [];
       };
+      newsletters: {
+        Row: {
+          id: string;
+          title: string;
+          subtitle: string;
+          preview_text: string;
+          status: NewsletterStatus;
+          content: Json;
+          beehiiv_post_id: string | null;
+          last_error: string | null;
+          synced_at: string | null;
+          created_by: string;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          title?: string;
+          subtitle?: string;
+          preview_text?: string;
+          status?: NewsletterStatus;
+          content?: Json;
+          beehiiv_post_id?: string | null;
+          last_error?: string | null;
+          synced_at?: string | null;
+          created_by: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          title?: string;
+          subtitle?: string;
+          preview_text?: string;
+          status?: NewsletterStatus;
+          content?: Json;
+          beehiiv_post_id?: string | null;
+          last_error?: string | null;
+          synced_at?: string | null;
+          created_by?: string;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<never, never>;
     Functions: Record<never, never>;
     Enums: {
       profile_role: ProfileRole;
+      newsletter_status: NewsletterStatus;
     };
   };
 }

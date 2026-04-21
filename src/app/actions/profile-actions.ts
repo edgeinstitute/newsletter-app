@@ -2,28 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { getAdminClient } from "@/lib/supabase/admin";
-import { getUserId } from "@/lib/supabase/getUser";
+import { requireAdmin } from "@/lib/server/auth";
+import type { ActionResult } from "@/lib/server/action-result";
 import type { ProfileRole } from "@/lib/supabase/database.types";
-
-export type ActionResult<T = undefined> =
-  | (T extends undefined ? { ok: true } : { ok: true; data: T })
-  | { ok: false; error: string };
-
-async function requireAdmin(): Promise<
-  { ok: true; userId: string } | { ok: false; error: string }
-> {
-  const userId = await getUserId();
-  if (!userId) return { ok: false, error: "Autentificare necesară" };
-  const admin = getAdminClient();
-  const { data, error } = await admin
-    .from("profiles")
-    .select("role")
-    .eq("id", userId)
-    .maybeSingle();
-  if (error) return { ok: false, error: error.message };
-  if (data?.role !== "admin") return { ok: false, error: "Acces restricționat" };
-  return { ok: true, userId };
-}
 
 export async function createTeamMember(input: {
   email: string;

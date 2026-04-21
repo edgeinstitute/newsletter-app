@@ -2,9 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { getAdminClient } from "@/lib/supabase/admin";
-import { getUserId } from "@/lib/supabase/getUser";
-import { encrypt, decrypt } from "@/lib/crypto";
 import { getEnv } from "@/lib/env";
+import { requireAdmin } from "@/lib/server/auth";
+import { readModule, writeModule } from "@/lib/server/settings-store";
+import { postToMailgun, type MailgunConfig } from "@/lib/mail/mailgun";
+import type { ActionResult } from "@/lib/server/action-result";
 import {
   DEFAULT_INVITE_TEMPLATE,
   htmlToText,
@@ -13,63 +15,8 @@ import {
 } from "@/lib/invite-template";
 import type { ProfileRole } from "@/lib/supabase/database.types";
 
-export type ActionResult<T = undefined> =
-  | (T extends undefined ? { ok: true } : { ok: true; data: T })
-  | { ok: false; error: string };
-
-export type MailgunConfig = {
-  apiKey: string;
-  domain: string;
-  fromEmail: string;
-  fromName: string;
-  region: "us" | "eu";
-};
-
 const MAILGUN_MODULE = "mailgun";
 const INVITE_TEMPLATE_MODULE = "email_template_invite";
-
-async function requireAdmin(): Promise<
-  { ok: true; userId: string } | { ok: false; error: string }
-> {
-  const userId = await getUserId();
-  if (!userId) return { ok: false, error: "Autentificare necesară" };
-  const admin = getAdminClient();
-  const { data, error } = await admin
-    .from("profiles")
-    .select("role")
-    .eq("id", userId)
-    .maybeSingle();
-  if (error) return { ok: false, error: error.message };
-  if (data?.role !== "admin") return { ok: false, error: "Acces restricționat" };
-  return { ok: true, userId };
-}
-
-async function readModule<T>(moduleName: string): Promise<T | null> {
-  const admin = getAdminClient();
-  const { data, error } = await admin
-    .from("settings")
-    .select("encrypted_config")
-    .eq("module_name", moduleName)
-    .maybeSingle();
-  if (error || !data) return null;
-  try {
-    return JSON.parse(decrypt(data.encrypted_config)) as T;
-  } catch {
-    return null;
-  }
-}
-
-async function writeModule(moduleName: string, value: unknown): Promise<string | null> {
-  const admin = getAdminClient();
-  const encrypted_config = encrypt(JSON.stringify(value));
-  const { error } = await admin
-    .from("settings")
-    .upsert(
-      { module_name: moduleName, encrypted_config, updated_at: new Date().toISOString() },
-      { onConflict: "module_name" },
-    );
-  return error?.message ?? null;
-}
 
 export async function saveMailgunConfig(input: MailgunConfig): Promise<ActionResult> {
   const check = await requireAdmin();
@@ -139,41 +86,6 @@ export async function resetInviteTemplate(): Promise<ActionResult<InviteTemplate
   if (err) return { ok: false, error: err };
   revalidatePath("/settings");
   return { ok: true, data: DEFAULT_INVITE_TEMPLATE };
-}
-
-async function postToMailgun(
-  cfg: MailgunConfig,
-  payload: { to: string; subject: string; html: string; text: string },
-): Promise<{ ok: true } | { ok: false; error: string }> {
-  const base = cfg.region === "eu" ? "https://api.eu.mailgun.net" : "https://api.mailgun.net";
-  const url = `${base}/v3/${encodeURIComponent(cfg.domain)}/messages`;
-
-  const fromHeader = cfg.fromName ? `${cfg.fromName} <${cfg.fromEmail}>` : cfg.fromEmail;
-
-  const body = new URLSearchParams();
-  body.set("from", fromHeader);
-  body.set("to", payload.to);
-  body.set("subject", payload.subject);
-  body.set("html", payload.html);
-  body.set("text", payload.text);
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${Buffer.from(`api:${cfg.apiKey}`).toString("base64")}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body: body.toString(),
-  });
-
-  if (!res.ok) {
-    const text = await res.text().catch(() => "");
-    return {
-      ok: false,
-      error: `Mailgun ${res.status}: ${text.slice(0, 200) || res.statusText}`,
-    };
-  }
-  return { ok: true };
 }
 
 export async function sendMailgunTest(toEmail: string): Promise<ActionResult> {

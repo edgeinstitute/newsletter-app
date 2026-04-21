@@ -1,7 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { getDynamicMiddlewareClient } from "@/lib/supabase/dynamic";
 
-const PROTECTED_PREFIXES = ["/dashboard", "/users", "/settings", "/profile"];
+const PROTECTED_PREFIXES = [
+  "/dashboard",
+  "/users",
+  "/settings",
+  "/profile",
+  "/newsletters",
+  "/media",
+];
 
 function isProtected(pathname: string): boolean {
   return PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));

@@ -3,8 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getAdminClient } from "@/lib/supabase/admin";
 import { getUserId } from "@/lib/supabase/getUser";
-
-export type ActionResult = { ok: true } | { ok: false; error: string };
+import type { ActionResult } from "@/lib/server/action-result";
 
 export async function updateUserProfile(input: {
   full_name: string;

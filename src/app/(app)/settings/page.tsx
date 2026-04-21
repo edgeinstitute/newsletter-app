@@ -2,10 +2,22 @@ import { redirect } from "next/navigation";
 import { getUserInfo } from "@/lib/supabase/getUser";
 import { getAdminClient } from "@/lib/supabase/admin";
 import { getProfileCached } from "@/lib/queries/profile";
-import { getInviteTemplateOrDefault, getMailgunConfigPublic } from "@/lib/queries/settings";
+import {
+  getBeehiivConfigPublic,
+  getInviteTemplateOrDefault,
+  getMailgunConfigPublic,
+  getWordpressConfigPublic,
+} from "@/lib/queries/settings";
 import { SettingsView } from "./_components/SettingsView";
 
-export default async function SettingsPage() {
+type SettingsTab = "mailgun" | "beehiiv" | "wordpress" | "template" | "invite";
+const ALLOWED_TABS: SettingsTab[] = ["mailgun", "beehiiv", "wordpress", "template", "invite"];
+
+export default async function SettingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>;
+}) {
   const info = await getUserInfo();
   if (!info) redirect("/login");
 
@@ -13,10 +25,15 @@ export default async function SettingsPage() {
   const profile = await getProfileCached(admin, info.id);
   if (profile?.role !== "admin") redirect("/dashboard");
 
-  const [mailgun, template] = await Promise.all([
+  const [mailgun, beehiiv, wordpress, template] = await Promise.all([
     getMailgunConfigPublic(admin),
+    getBeehiivConfigPublic(admin),
+    getWordpressConfigPublic(admin),
     getInviteTemplateOrDefault(admin),
   ]);
+
+  const { tab } = await searchParams;
+  const initialTab = ALLOWED_TABS.find((t) => t === tab);
 
   return (
     <div className="animate-fade-in-up flex flex-col gap-6">
@@ -27,7 +44,13 @@ export default async function SettingsPage() {
         </p>
       </header>
 
-      <SettingsView mailgun={mailgun} template={template} />
+      <SettingsView
+        mailgun={mailgun}
+        beehiiv={beehiiv}
+        wordpress={wordpress}
+        template={template}
+        initialTab={initialTab}
+      />
     </div>
   );
 }

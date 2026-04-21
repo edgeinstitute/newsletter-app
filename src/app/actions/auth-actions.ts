@@ -5,8 +5,7 @@ import { redirect } from "next/navigation";
 import { getAdminClient } from "@/lib/supabase/admin";
 import { getDynamicServerClient } from "@/lib/supabase/dynamic";
 import { getUserId } from "@/lib/supabase/getUser";
-
-export type ActionResult = { ok: true } | { ok: false; error: string };
+import type { ActionResult } from "@/lib/server/action-result";
 
 export async function signOut(): Promise<never> {
   const supabase = await getDynamicServerClient();

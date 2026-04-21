@@ -76,10 +76,10 @@ export function DashboardShell({ initialCollapsed, user, children }: Props) {
   };
 
   return (
-    <div className="bg-surface text-foreground flex min-h-[100svh]">
+    <div className="bg-surface text-foreground flex h-[100svh]">
       {/* Desktop sidebar */}
       <aside
-        className={`border-border bg-surface-elevated hidden flex-col border-r transition-[width] duration-200 lg:flex ${
+        className={`border-border bg-surface-elevated sticky top-0 hidden h-[100svh] flex-col border-r transition-[width] duration-200 lg:flex ${
           collapsed ? "w-16" : "w-64"
         }`}
       >
@@ -187,21 +187,27 @@ export function DashboardShell({ initialCollapsed, user, children }: Props) {
 
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="border-border bg-surface-elevated flex h-16 items-center justify-between border-b px-4 lg:hidden">
-          <div className="flex items-center gap-3">
+        <header className="border-border bg-surface-elevated flex h-16 items-center justify-between gap-3 border-b px-4 lg:hidden">
+          <div className="flex min-w-0 items-center gap-3">
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
-              className="border-border bg-surface-elevated text-text-secondary inline-flex h-9 w-9 items-center justify-center rounded-xs border"
+              className="border-border bg-surface-elevated text-text-secondary inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xs border"
               aria-label="Deschide meniul"
             >
               <MenuIcon className="h-4 w-4" />
             </button>
-            <Link href="/dashboard" className="font-display text-foreground text-xl">
+            <Link href="/dashboard" className="font-display text-foreground shrink-0 text-xl">
               EDGE
             </Link>
           </div>
-          <Avatar url={user.avatarUrl} initials={initials} />
+          <div className="flex min-w-0 items-center gap-2">
+            <div className="hidden min-w-0 text-right sm:block">
+              <p className="text-foreground truncate text-sm font-medium">{user.displayName}</p>
+              <p className="text-text-muted truncate text-xs">{user.email}</p>
+            </div>
+            <Avatar url={user.avatarUrl} initials={initials} />
+          </div>
         </header>
 
         <main className="flex-1 overflow-auto">
@@ -220,6 +226,7 @@ function Avatar({ url, initials }: { url: string | null; initials: string }) {
         alt=""
         width={36}
         height={36}
+        priority
         className="h-9 w-9 rounded-full object-cover"
         unoptimized
       />
