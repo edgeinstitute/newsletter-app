@@ -27,7 +27,7 @@ export function SettingsView({ mailgun, template }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <nav className="flex flex-wrap gap-1 rounded-xs border border-border bg-surface-elevated p-1">
+      <nav className="border-border bg-surface-elevated flex flex-wrap gap-1 rounded-xs border p-1">
         {tabs.map((t) => {
           const Icon = t.icon;
           const active = tab === t.key;

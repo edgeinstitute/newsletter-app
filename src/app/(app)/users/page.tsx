@@ -16,10 +16,10 @@ export default async function UsersPage() {
   if (!isAdmin) redirect("/dashboard");
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-in-up">
+    <div className="animate-fade-in-up flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl text-foreground">Echipa</h1>
-        <p className="mt-1 text-sm text-text-secondary">
+        <h1 className="font-display text-foreground text-3xl">Echipa</h1>
+        <p className="text-text-secondary mt-1 text-sm">
           Administrează membrii, rolurile și accesul la funcții.
         </p>
       </header>
@@ -27,7 +27,7 @@ export default async function UsersPage() {
       <Suspense
         fallback={
           <div className="flex justify-center py-12">
-            <SpinnerIcon className="h-6 w-6 text-primary" />
+            <SpinnerIcon className="text-primary h-6 w-6" />
           </div>
         }
       >

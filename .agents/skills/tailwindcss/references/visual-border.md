@@ -63,7 +63,7 @@ Utilities for border width, color, style, and radius.
   <div>Item 2</div>
   <div>Item 3</div>
 </div>
-<div class="divide-x divide-gray-300 flex">
+<div class="flex divide-x divide-gray-300">
   <div>Col 1</div>
   <div>Col 2</div>
 </div>

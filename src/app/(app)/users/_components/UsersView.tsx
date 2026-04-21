@@ -7,11 +7,7 @@ import Image from "next/image";
 import { Dropdown } from "@/components/ui/Dropdown";
 import { SpinnerIcon, TrashIcon, CloseIcon } from "@/components/icons";
 import type { ProfileRole } from "@/lib/supabase/database.types";
-import {
-  createTeamMember,
-  changeRole,
-  removeTeamMember,
-} from "@/app/actions/profile-actions";
+import { createTeamMember, changeRole, removeTeamMember } from "@/app/actions/profile-actions";
 
 export type TeamMember = {
   id: string;
@@ -63,8 +59,7 @@ export function UsersView({ members, currentUserId }: Props) {
     if (!q) return sorted;
     return sorted.filter(
       (m) =>
-        (m.fullName ?? "").toLowerCase().includes(q) ||
-        (m.email ?? "").toLowerCase().includes(q),
+        (m.fullName ?? "").toLowerCase().includes(q) || (m.email ?? "").toLowerCase().includes(q),
     );
   }, [sorted, query]);
 
@@ -107,29 +102,27 @@ export function UsersView({ members, currentUserId }: Props) {
           placeholder="Caută după nume sau email…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full h-10 rounded-xs border border-border bg-surface-elevated px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+          className="border-border bg-surface-elevated text-foreground hover:border-primary focus:border-primary h-10 w-full rounded-xs border px-3 text-sm transition focus:outline-none"
         />
         <button
           type="button"
           onClick={() => setAddOpen(true)}
-          className="w-full md:w-80 inline-flex h-10 items-center justify-center rounded-xs bg-primary px-4 text-sm font-medium text-text-inverse transition hover:bg-primary-600"
+          className="bg-primary text-text-inverse hover:bg-primary-600 inline-flex h-10 w-full items-center justify-center rounded-xs px-4 text-sm font-medium transition md:w-80"
         >
           + Adaugă membru
         </button>
       </div>
 
       {error && (
-        <div className="rounded-xs border border-danger-200 bg-danger-50 px-3 py-2 text-sm text-danger-700">
+        <div className="border-danger-200 bg-danger-50 text-danger-700 rounded-xs border px-3 py-2 text-sm">
           {error}
         </div>
       )}
 
-      <div className="overflow-hidden rounded-xs border border-border bg-surface-elevated">
-        <ul className="divide-y divide-border">
+      <div className="border-border bg-surface-elevated overflow-hidden rounded-xs border">
+        <ul className="divide-border divide-y">
           {filtered.length === 0 && (
-            <li className="p-6 text-center text-sm text-text-muted">
-              Niciun membru găsit.
-            </li>
+            <li className="text-text-muted p-6 text-center text-sm">Niciun membru găsit.</li>
           )}
           {filtered.map((m) => {
             const isSelf = m.id === currentUserId;
@@ -142,7 +135,10 @@ export function UsersView({ members, currentUserId }: Props) {
               .join("");
 
             return (
-              <li key={m.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:gap-4">
+              <li
+                key={m.id}
+                className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:gap-4"
+              >
                 <div className="flex min-w-0 flex-1 items-center gap-3">
                   {m.avatarUrl ? (
                     <Image
@@ -154,26 +150,26 @@ export function UsersView({ members, currentUserId }: Props) {
                       unoptimized
                     />
                   ) : (
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-200 text-xs font-medium text-primary-700">
+                    <div className="bg-primary-200 text-primary-700 flex h-10 w-10 items-center justify-center rounded-full text-xs font-medium">
                       {initials}
                     </div>
                   )}
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-foreground">
+                    <p className="text-foreground truncate text-sm font-medium">
                       {name}
                       {isSelf && (
-                        <span className="ml-2 rounded-full bg-primary-50 px-2 py-0.5 text-[10px] uppercase tracking-wide text-primary-700">
+                        <span className="bg-primary-50 text-primary-700 ml-2 rounded-full px-2 py-0.5 text-[10px] tracking-wide uppercase">
                           Tu
                         </span>
                       )}
                     </p>
-                    <p className="truncate text-xs text-text-muted">{m.email ?? "—"}</p>
+                    <p className="text-text-muted truncate text-xs">{m.email ?? "—"}</p>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3 sm:justify-end">
                   {isSelf ? (
-                    <span className="rounded-full bg-primary-50 px-2 py-1 text-xs text-primary-700">
+                    <span className="bg-primary-50 text-primary-700 rounded-full px-2 py-1 text-xs">
                       {roleLabel[m.role]}
                     </span>
                   ) : (
@@ -193,7 +189,7 @@ export function UsersView({ members, currentUserId }: Props) {
                       onClick={() => remove(m.id, name)}
                       disabled={busy}
                       aria-label={`Șterge ${name}`}
-                      className="inline-flex h-9 w-9 items-center justify-center rounded-xs border border-border text-text-secondary transition hover:border-danger hover:text-danger disabled:cursor-not-allowed disabled:opacity-60"
+                      className="border-border text-text-secondary hover:border-danger hover:text-danger inline-flex h-9 w-9 items-center justify-center rounded-xs border transition disabled:cursor-not-allowed disabled:opacity-60"
                     >
                       {busy ? (
                         <SpinnerIcon className="h-4 w-4" />
@@ -222,13 +218,7 @@ export function UsersView({ members, currentUserId }: Props) {
   );
 }
 
-function AddMemberModal({
-  onClose,
-  onCreated,
-}: {
-  onClose: () => void;
-  onCreated: () => void;
-}) {
+function AddMemberModal({ onClose, onCreated }: { onClose: () => void; onCreated: () => void }) {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
@@ -255,14 +245,14 @@ function AddMemberModal({
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 animate-fade-in">
-      <div className="w-full max-w-md rounded-xs border border-border bg-surface-elevated shadow-lg animate-fade-in-up">
-        <div className="flex items-center justify-between border-b border-border px-5 py-4">
-          <h2 className="text-lg font-medium text-foreground">Adaugă membru nou</h2>
+    <div className="animate-fade-in fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+      <div className="border-border bg-surface-elevated animate-fade-in-up w-full max-w-md rounded-xs border shadow-lg">
+        <div className="border-border flex items-center justify-between border-b px-5 py-4">
+          <h2 className="text-foreground text-lg font-medium">Adaugă membru nou</h2>
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-xs text-text-muted hover:bg-surface-muted"
+            className="text-text-muted hover:bg-surface-muted inline-flex h-8 w-8 items-center justify-center rounded-xs"
             aria-label="Închide"
           >
             <CloseIcon className="h-4 w-4" />
@@ -271,7 +261,7 @@ function AddMemberModal({
 
         <form onSubmit={onSubmit} className="flex flex-col gap-4 p-5" noValidate>
           <label className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-text-secondary">
+            <span className="text-text-secondary text-sm font-medium">
               Nume complet <span className="text-danger">*</span>
             </span>
             <input
@@ -279,12 +269,12 @@ function AddMemberModal({
               required
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="h-10 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+              className="border-border bg-surface text-foreground hover:border-primary focus:border-primary h-10 rounded-xs border px-3 text-sm transition focus:outline-none"
             />
           </label>
 
           <label className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-text-secondary">
+            <span className="text-text-secondary text-sm font-medium">
               Email <span className="text-danger">*</span>
             </span>
             <input
@@ -292,12 +282,12 @@ function AddMemberModal({
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-10 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+              className="border-border bg-surface text-foreground hover:border-primary focus:border-primary h-10 rounded-xs border px-3 text-sm transition focus:outline-none"
             />
           </label>
 
           <label className="flex flex-col gap-1">
-            <span className="text-sm font-medium text-text-secondary">
+            <span className="text-text-secondary text-sm font-medium">
               Parolă temporară <span className="text-danger">*</span>
             </span>
             <input
@@ -306,9 +296,9 @@ function AddMemberModal({
               minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="h-10 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+              className="border-border bg-surface text-foreground hover:border-primary focus:border-primary h-10 rounded-xs border px-3 text-sm transition focus:outline-none"
             />
-            <span className="text-xs text-text-muted">Minim 8 caractere.</span>
+            <span className="text-text-muted text-xs">Minim 8 caractere.</span>
           </label>
 
           <Dropdown<ProfileRole>
@@ -319,7 +309,7 @@ function AddMemberModal({
           />
 
           {error && (
-            <div className="rounded-xs border border-danger-200 bg-danger-50 px-3 py-2 text-xs text-danger-700">
+            <div className="border-danger-200 bg-danger-50 text-danger-700 rounded-xs border px-3 py-2 text-xs">
               {error}
             </div>
           )}
@@ -329,14 +319,14 @@ function AddMemberModal({
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="inline-flex h-10 items-center justify-center rounded-xs border border-border bg-surface-elevated px-4 text-sm text-foreground transition hover:border-primary"
+              className="border-border bg-surface-elevated text-foreground hover:border-primary inline-flex h-10 items-center justify-center rounded-xs border px-4 text-sm transition"
             >
               Renunță
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xs bg-primary px-4 text-sm font-medium text-text-inverse transition hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
+              className="bg-primary text-text-inverse hover:bg-primary-600 inline-flex h-10 items-center justify-center gap-2 rounded-xs px-4 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting && <SpinnerIcon className="h-4 w-4" />}
               Creează cont

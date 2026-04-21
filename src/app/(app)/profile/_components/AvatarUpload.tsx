@@ -91,14 +91,12 @@ export function AvatarUpload({ userId, initialAvatarUrl, displayName }: Props) {
   const busy = uploading || pending;
 
   return (
-    <section className="rounded-xs border border-border bg-surface-elevated p-6">
-      <h2 className="text-lg font-medium text-foreground">Fotografie de profil</h2>
-      <p className="mt-1 text-sm text-text-muted">
-        JPEG, PNG sau WebP, până la 300 KB.
-      </p>
+    <section className="border-border bg-surface-elevated rounded-xs border p-6">
+      <h2 className="text-foreground text-lg font-medium">Fotografie de profil</h2>
+      <p className="text-text-muted mt-1 text-sm">JPEG, PNG sau WebP, până la 300 KB.</p>
 
       <div className="mt-5 flex items-center gap-5">
-        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full bg-primary-200">
+        <div className="bg-primary-200 relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
           {avatarUrl ? (
             <Image
               src={avatarUrl}
@@ -109,7 +107,7 @@ export function AvatarUpload({ userId, initialAvatarUrl, displayName }: Props) {
               unoptimized
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center text-lg font-medium text-primary-700">
+            <div className="text-primary-700 flex h-full w-full items-center justify-center text-lg font-medium">
               {initials || "?"}
             </div>
           )}
@@ -121,9 +119,13 @@ export function AvatarUpload({ userId, initialAvatarUrl, displayName }: Props) {
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={busy}
-              className="inline-flex h-9 items-center gap-2 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary disabled:cursor-not-allowed disabled:opacity-60"
+              className="border-border bg-surface text-foreground hover:border-primary inline-flex h-9 items-center gap-2 rounded-xs border px-3 text-sm transition disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {busy ? <SpinnerIcon className="h-3.5 w-3.5" /> : <PencilIcon className="h-3.5 w-3.5" />}
+              {busy ? (
+                <SpinnerIcon className="h-3.5 w-3.5" />
+              ) : (
+                <PencilIcon className="h-3.5 w-3.5" />
+              )}
               {avatarUrl ? "Schimbă" : "Încarcă"}
             </button>
             {avatarUrl && (
@@ -131,13 +133,13 @@ export function AvatarUpload({ userId, initialAvatarUrl, displayName }: Props) {
                 type="button"
                 onClick={onRemove}
                 disabled={busy}
-                className="inline-flex h-9 items-center gap-2 rounded-xs border border-border bg-surface px-3 text-sm text-danger-700 transition hover:border-danger disabled:cursor-not-allowed disabled:opacity-60"
+                className="border-border bg-surface text-danger-700 hover:border-danger inline-flex h-9 items-center gap-2 rounded-xs border px-3 text-sm transition disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <TrashIcon className="h-3.5 w-3.5" /> Șterge
               </button>
             )}
           </div>
-          {error && <p className="text-xs text-danger-700">{error}</p>}
+          {error && <p className="text-danger-700 text-xs">{error}</p>}
         </div>
 
         <input

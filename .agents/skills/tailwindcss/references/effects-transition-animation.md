@@ -27,7 +27,7 @@ Utilities for CSS transitions and animations.
 <button class="transition duration-300">300ms</button>
 <button class="transition duration-500">500ms</button>
 <button class="transition delay-150">Delay 150ms</button>
-<button class="transition duration-300 delay-100">Both</button>
+<button class="transition delay-100 duration-300">Both</button>
 ```
 
 ### Transition timing
@@ -54,7 +54,9 @@ Built-in: `animate-spin`, `animate-ping`, `animate-pulse`, `animate-bounce`. Use
 ### Reduced motion
 
 ```html
-<button class="transition hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
+<button
+  class="transition hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+>
   Respects prefers-reduced-motion
 </button>
 <div class="animate-spin motion-reduce:animate-none">Spinner hidden when reduced motion</div>

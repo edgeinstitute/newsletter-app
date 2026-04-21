@@ -42,9 +42,9 @@ export function DeleteAccountSection({ email }: Props) {
   };
 
   return (
-    <section className="rounded-xs border border-danger-200 bg-danger-50 p-6">
-      <h2 className="text-lg font-medium text-danger-700">Zonă sensibilă</h2>
-      <p className="mt-1 text-sm text-danger-700/80">
+    <section className="border-danger-200 bg-danger-50 rounded-xs border p-6">
+      <h2 className="text-danger-700 text-lg font-medium">Zonă sensibilă</h2>
+      <p className="text-danger-700/80 mt-1 text-sm">
         Ștergerea contului este ireversibilă. Toate datele tale vor fi șterse.
       </p>
 
@@ -52,29 +52,31 @@ export function DeleteAccountSection({ email }: Props) {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="mt-5 inline-flex h-10 items-center justify-center rounded-xs border border-danger bg-transparent px-4 text-sm font-medium text-danger-700 transition hover:bg-danger hover:text-text-inverse"
+          className="border-danger text-danger-700 hover:bg-danger hover:text-text-inverse mt-5 inline-flex h-10 items-center justify-center rounded-xs border bg-transparent px-4 text-sm font-medium transition"
         >
           Șterge contul
         </button>
       ) : (
         <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-3" noValidate>
-          <label className="flex flex-col gap-1 text-sm text-danger-700">
-            <span>Confirmă ștergerea introducând emailul tău: <strong>{email}</strong></span>
+          <label className="text-danger-700 flex flex-col gap-1 text-sm">
+            <span>
+              Confirmă ștergerea introducând emailul tău: <strong>{email}</strong>
+            </span>
             <input
               type="email"
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
-              className="h-10 rounded-xs border border-danger-200 bg-surface-elevated px-3 text-sm text-foreground focus:border-danger focus:outline-none"
+              className="border-danger-200 bg-surface-elevated text-foreground focus:border-danger h-10 rounded-xs border px-3 text-sm focus:outline-none"
             />
           </label>
 
-          {error && <p className="text-xs text-danger-700">{error}</p>}
+          {error && <p className="text-danger-700 text-xs">{error}</p>}
 
           <div className="flex flex-wrap gap-2">
             <button
               type="submit"
               disabled={pending}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xs bg-danger px-4 text-sm font-medium text-text-inverse transition hover:bg-danger-600 disabled:cursor-not-allowed disabled:opacity-60"
+              className="bg-danger text-text-inverse hover:bg-danger-600 inline-flex h-10 items-center justify-center gap-2 rounded-xs px-4 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
             >
               {pending && <SpinnerIcon className="h-4 w-4" />}
               Confirmă ștergerea
@@ -87,7 +89,7 @@ export function DeleteAccountSection({ email }: Props) {
                 setError(null);
               }}
               disabled={pending}
-              className="inline-flex h-10 items-center justify-center rounded-xs border border-border bg-surface-elevated px-4 text-sm text-foreground transition hover:border-primary"
+              className="border-border bg-surface-elevated text-foreground hover:border-primary inline-flex h-10 items-center justify-center rounded-xs border px-4 text-sm transition"
             >
               Renunță
             </button>

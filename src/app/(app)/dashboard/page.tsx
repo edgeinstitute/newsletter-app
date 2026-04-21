@@ -9,14 +9,12 @@ export default async function DashboardOverviewPage() {
   const isAdmin = profile?.role === "admin";
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-in-up">
+    <div className="animate-fade-in-up flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl text-foreground">
+        <h1 className="font-display text-foreground text-3xl">
           Bine ai revenit{name ? `, ${name}` : ""}
         </h1>
-        <p className="mt-1 text-sm text-text-secondary">
-          Acesta este panoul tău de administrare.
-        </p>
+        <p className="text-text-secondary mt-1 text-sm">Acesta este panoul tău de administrare.</p>
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -37,22 +35,14 @@ export default async function DashboardOverviewPage() {
   );
 }
 
-function Card({
-  title,
-  description,
-  href,
-}: {
-  title: string;
-  description: string;
-  href: string;
-}) {
+function Card({ title, description, href }: { title: string; description: string; href: string }) {
   return (
     <a
       href={href}
-      className="rounded-xs border border-border bg-surface-elevated p-5 transition hover:border-primary hover:shadow-sm"
+      className="border-border bg-surface-elevated hover:border-primary rounded-xs border p-5 transition hover:shadow-sm"
     >
-      <h3 className="text-base font-medium text-foreground">{title}</h3>
-      <p className="mt-1 text-sm text-text-secondary">{description}</p>
+      <h3 className="text-foreground text-base font-medium">{title}</h3>
+      <p className="text-text-secondary mt-1 text-sm">{description}</p>
     </a>
   );
 }

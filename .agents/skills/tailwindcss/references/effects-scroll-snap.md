@@ -13,16 +13,16 @@ Utilities for scroll snap behavior in overflow containers. Use for carousels, ho
 
 ```html
 <!-- Horizontal snap (carousel) -->
-<div class="snap-x snap-mandatory overflow-x-auto flex gap-4">
-  <div class="snap-center shrink-0 w-80">Slide 1</div>
-  <div class="snap-center shrink-0 w-80">Slide 2</div>
-  <div class="snap-center shrink-0 w-80">Slide 3</div>
+<div class="flex snap-x snap-mandatory gap-4 overflow-x-auto">
+  <div class="w-80 shrink-0 snap-center">Slide 1</div>
+  <div class="w-80 shrink-0 snap-center">Slide 2</div>
+  <div class="w-80 shrink-0 snap-center">Slide 3</div>
 </div>
 
 <!-- Vertical snap -->
-<div class="snap-y snap-mandatory overflow-y-auto h-screen">
-  <div class="snap-start h-screen">Section 1</div>
-  <div class="snap-start h-screen">Section 2</div>
+<div class="h-screen snap-y snap-mandatory overflow-y-auto">
+  <div class="h-screen snap-start">Section 1</div>
+  <div class="h-screen snap-start">Section 2</div>
 </div>
 
 <!-- Both axes -->

@@ -66,10 +66,7 @@ export async function createTeamMember(input: {
   return { ok: true, data: { userId: data.user.id } };
 }
 
-export async function changeRole(
-  targetUserId: string,
-  role: ProfileRole,
-): Promise<ActionResult> {
+export async function changeRole(targetUserId: string, role: ProfileRole): Promise<ActionResult> {
   const check = await requireAdmin();
   if (!check.ok) return check;
 

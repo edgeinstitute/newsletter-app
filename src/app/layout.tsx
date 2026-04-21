@@ -43,7 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {themeInitScript}
         </Script>
       </head>
-      <body className="min-h-full bg-surface text-foreground">
+      <body className="bg-surface text-foreground min-h-full">
         <ThemeProvider>
           <SupabaseProvider url={url} anonKey={anonKey}>
             {children}

@@ -1,10 +1,7 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { decrypt } from "@/lib/crypto";
-import {
-  DEFAULT_INVITE_TEMPLATE,
-  type InviteTemplate,
-} from "@/lib/invite-template";
+import { DEFAULT_INVITE_TEMPLATE, type InviteTemplate } from "@/lib/invite-template";
 import type { Database } from "@/lib/supabase/database.types";
 
 export type AdminDb = SupabaseClient<Database>;
@@ -17,10 +14,7 @@ export type PublicMailgunConfig = {
   apiKeyMasked: string;
 };
 
-async function readSettings<T>(
-  adminDb: AdminDb,
-  moduleName: string,
-): Promise<T | null> {
+async function readSettings<T>(adminDb: AdminDb, moduleName: string): Promise<T | null> {
   const { data, error } = await adminDb
     .from("settings")
     .select("encrypted_config")
@@ -60,9 +54,7 @@ export async function getMailgunConfigPublic(
   };
 }
 
-export async function getInviteTemplateOrDefault(
-  adminDb: AdminDb,
-): Promise<InviteTemplate> {
+export async function getInviteTemplateOrDefault(adminDb: AdminDb): Promise<InviteTemplate> {
   const tpl = await readSettings<InviteTemplate>(adminDb, "email_template_invite");
   return tpl ?? DEFAULT_INVITE_TEMPLATE;
 }

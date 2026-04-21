@@ -45,13 +45,13 @@ export function ProfileForm({ email, role, initialFullName, initialPhone }: Prop
   };
 
   return (
-    <section className="rounded-xs border border-border bg-surface-elevated p-6">
+    <section className="border-border bg-surface-elevated rounded-xs border p-6">
       <div className="mb-5 flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-lg font-medium text-foreground">Detalii cont</h2>
-          <p className="text-sm text-text-muted">Informațiile de bază ale contului tău.</p>
+          <h2 className="text-foreground text-lg font-medium">Detalii cont</h2>
+          <p className="text-text-muted text-sm">Informațiile de bază ale contului tău.</p>
         </div>
-        <span className="rounded-full bg-primary-50 px-2 py-1 text-xs text-primary-700">
+        <span className="bg-primary-50 text-primary-700 rounded-full px-2 py-1 text-xs">
           {roleLabel[role]}
         </span>
       </div>
@@ -63,7 +63,7 @@ export function ProfileForm({ email, role, initialFullName, initialPhone }: Prop
             required
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            className="h-10 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+            className="border-border bg-surface text-foreground hover:border-primary focus:border-primary h-10 rounded-xs border px-3 text-sm transition focus:outline-none"
           />
         </Field>
 
@@ -73,7 +73,7 @@ export function ProfileForm({ email, role, initialFullName, initialPhone }: Prop
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+40 7xx xxx xxx"
-            className="h-10 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+            className="border-border bg-surface text-foreground hover:border-primary focus:border-primary h-10 rounded-xs border px-3 text-sm transition focus:outline-none"
           />
         </Field>
 
@@ -82,26 +82,26 @@ export function ProfileForm({ email, role, initialFullName, initialPhone }: Prop
             type="email"
             readOnly
             value={email ?? ""}
-            className="h-10 cursor-not-allowed rounded-xs border border-border bg-surface-muted px-3 text-sm text-text-muted"
+            className="border-border bg-surface-muted text-text-muted h-10 cursor-not-allowed rounded-xs border px-3 text-sm"
           />
         </Field>
 
         {error && (
-          <div className="rounded-xs border border-danger-200 bg-danger-50 px-3 py-2 text-xs text-danger-700">
+          <div className="border-danger-200 bg-danger-50 text-danger-700 rounded-xs border px-3 py-2 text-xs">
             {error}
           </div>
         )}
 
         <div className="flex items-center justify-end gap-3">
           {savedAt && !pending && (
-            <span className="inline-flex items-center gap-1 text-xs text-success-700">
+            <span className="text-success-700 inline-flex items-center gap-1 text-xs">
               <CheckIcon className="h-3.5 w-3.5" /> Salvat
             </span>
           )}
           <button
             type="submit"
             disabled={pending}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xs bg-primary px-4 text-sm font-medium text-text-inverse transition hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
+            className="bg-primary text-text-inverse hover:bg-primary-600 inline-flex h-10 items-center justify-center gap-2 rounded-xs px-4 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
           >
             {pending && <SpinnerIcon className="h-4 w-4" />}
             Salvează
@@ -123,7 +123,7 @@ function Field({
 }) {
   return (
     <label className="flex flex-col gap-1">
-      <span className="text-sm font-medium text-text-secondary">
+      <span className="text-text-secondary text-sm font-medium">
         {label}
         {required && <span className="text-danger"> *</span>}
       </span>

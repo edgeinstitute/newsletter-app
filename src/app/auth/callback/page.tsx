@@ -65,24 +65,24 @@ export default function AuthCallbackPage() {
   }, [router, supabase]);
 
   return (
-    <main className="flex min-h-[100svh] items-center justify-center bg-surface px-4">
-      <div className="w-full max-w-sm rounded-xs border border-border bg-surface-elevated p-6 text-center animate-fade-in">
+    <main className="bg-surface flex min-h-[100svh] items-center justify-center px-4">
+      <div className="border-border bg-surface-elevated animate-fade-in w-full max-w-sm rounded-xs border p-6 text-center">
         {error ? (
           <>
-            <h1 className="font-display text-2xl text-foreground">Eroare</h1>
-            <p className="mt-2 text-sm text-danger-700">{error}</p>
+            <h1 className="font-display text-foreground text-2xl">Eroare</h1>
+            <p className="text-danger-700 mt-2 text-sm">{error}</p>
             <button
               type="button"
               onClick={() => router.replace("/login")}
-              className="mt-4 inline-flex h-10 items-center justify-center rounded-xs bg-primary px-4 text-sm font-medium text-text-inverse transition hover:bg-primary-600"
+              className="bg-primary text-text-inverse hover:bg-primary-600 mt-4 inline-flex h-10 items-center justify-center rounded-xs px-4 text-sm font-medium transition"
             >
               Înapoi la autentificare
             </button>
           </>
         ) : (
           <>
-            <SpinnerIcon className="mx-auto h-6 w-6 text-primary" />
-            <p className="mt-3 text-sm text-text-secondary">Se verifică linkul…</p>
+            <SpinnerIcon className="text-primary mx-auto h-6 w-6" />
+            <p className="text-text-secondary mt-3 text-sm">Se verifică linkul…</p>
           </>
         )}
       </div>

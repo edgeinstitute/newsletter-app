@@ -71,9 +71,7 @@ async function writeModule(moduleName: string, value: unknown): Promise<string |
   return error?.message ?? null;
 }
 
-export async function saveMailgunConfig(
-  input: MailgunConfig,
-): Promise<ActionResult> {
+export async function saveMailgunConfig(input: MailgunConfig): Promise<ActionResult> {
   const check = await requireAdmin();
   if (!check.ok) return check;
 
@@ -110,9 +108,7 @@ export async function saveMailgunConfig(
   return { ok: true };
 }
 
-export async function saveInviteTemplate(
-  input: InviteTemplate,
-): Promise<ActionResult> {
+export async function saveInviteTemplate(input: InviteTemplate): Promise<ActionResult> {
   const check = await requireAdmin();
   if (!check.ok) return check;
 
@@ -136,9 +132,7 @@ export async function saveInviteTemplate(
   return { ok: true };
 }
 
-export async function resetInviteTemplate(): Promise<
-  ActionResult<InviteTemplate>
-> {
+export async function resetInviteTemplate(): Promise<ActionResult<InviteTemplate>> {
   const check = await requireAdmin();
   if (!check.ok) return check;
   const err = await writeModule(INVITE_TEMPLATE_MODULE, DEFAULT_INVITE_TEMPLATE);
@@ -151,14 +145,10 @@ async function postToMailgun(
   cfg: MailgunConfig,
   payload: { to: string; subject: string; html: string; text: string },
 ): Promise<{ ok: true } | { ok: false; error: string }> {
-  const base = cfg.region === "eu"
-    ? "https://api.eu.mailgun.net"
-    : "https://api.mailgun.net";
+  const base = cfg.region === "eu" ? "https://api.eu.mailgun.net" : "https://api.mailgun.net";
   const url = `${base}/v3/${encodeURIComponent(cfg.domain)}/messages`;
 
-  const fromHeader = cfg.fromName
-    ? `${cfg.fromName} <${cfg.fromEmail}>`
-    : cfg.fromEmail;
+  const fromHeader = cfg.fromName ? `${cfg.fromName} <${cfg.fromEmail}>` : cfg.fromEmail;
 
   const body = new URLSearchParams();
   body.set("from", fromHeader);
@@ -232,8 +222,7 @@ export async function sendTeamInvite(input: {
     return { ok: false, error: "Configurează Mailgun înainte de a trimite invitații" };
   }
   const template =
-    (await readModule<InviteTemplate>(INVITE_TEMPLATE_MODULE)) ??
-    DEFAULT_INVITE_TEMPLATE;
+    (await readModule<InviteTemplate>(INVITE_TEMPLATE_MODULE)) ?? DEFAULT_INVITE_TEMPLATE;
 
   const { APP_URL } = getEnv();
   const admin = getAdminClient();
@@ -273,12 +262,7 @@ export async function sendTeamInvite(input: {
   const vars: Record<string, string> = {
     fullName,
     email,
-    role:
-      role === "admin"
-        ? "Administrator"
-        : role === "viewer"
-          ? "Vizualizator"
-          : "Echipă",
+    role: role === "admin" ? "Administrator" : role === "viewer" ? "Vizualizator" : "Echipă",
     inviteLink,
     inviterName: inviterProfile?.full_name ?? "Echipa",
     appName,

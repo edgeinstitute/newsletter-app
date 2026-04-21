@@ -124,7 +124,7 @@ export function Dropdown<T extends string>({
   return (
     <div className={`flex flex-col gap-1 ${className ?? ""}`}>
       {label && (
-        <label htmlFor={id} className="text-sm font-medium text-text-secondary">
+        <label htmlFor={id} className="text-text-secondary text-sm font-medium">
           {label}
         </label>
       )}
@@ -149,13 +149,13 @@ export function Dropdown<T extends string>({
           </span>
         </span>
         <ChevronDownIcon
-          className={`h-4 w-4 text-text-muted transition ${open ? "rotate-180" : ""}`}
+          className={`text-text-muted h-4 w-4 transition ${open ? "rotate-180" : ""}`}
         />
       </button>
       {error ? (
-        <p className="text-xs text-danger">{error}</p>
+        <p className="text-danger text-xs">{error}</p>
       ) : hint ? (
-        <p className="text-xs text-text-muted">{hint}</p>
+        <p className="text-text-muted text-xs">{hint}</p>
       ) : null}
 
       {mounted && open
@@ -164,7 +164,7 @@ export function Dropdown<T extends string>({
               ref={menuRef}
               role="listbox"
               style={{ top: coords.top, left: coords.left, minWidth: coords.width }}
-              className="absolute z-50 max-h-72 overflow-y-auto rounded-xs border border-border bg-surface-elevated py-1 shadow-lg animate-fade-in"
+              className="border-border bg-surface-elevated animate-fade-in absolute z-50 max-h-72 overflow-y-auto rounded-xs border py-1 shadow-lg"
             >
               {options.map((option) => {
                 const active = option.value === value;
@@ -180,13 +180,13 @@ export function Dropdown<T extends string>({
                       active
                         ? "bg-primary-50 text-primary-700"
                         : "text-foreground hover:bg-surface-muted"
-                    } ${option.disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+                    } ${option.disabled ? "cursor-not-allowed opacity-50" : ""}`}
                   >
                     {option.icon}
                     <span className="flex-1">
                       <span className="block">{option.label}</span>
                       {option.description && (
-                        <span className="block text-xs text-text-muted">{option.description}</span>
+                        <span className="text-text-muted block text-xs">{option.description}</span>
                       )}
                     </span>
                   </button>

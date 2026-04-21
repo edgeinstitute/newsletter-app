@@ -33,9 +33,7 @@ export function DashboardNav({ collapsed, role, onNavigate }: Props) {
       {items.map((item) => {
         if (item.adminOnly && role !== "admin") return null;
         const active =
-          item.href === "/dashboard"
-            ? pathname === "/dashboard"
-            : pathname.startsWith(item.href);
+          item.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(item.href);
         const Icon = item.icon;
         return (
           <Link
@@ -52,7 +50,7 @@ export function DashboardNav({ collapsed, role, onNavigate }: Props) {
             <Icon className="h-4 w-4 shrink-0" />
             {!collapsed && <span className="truncate">{item.label}</span>}
             {!collapsed && item.adminOnly && (
-              <span className="ml-auto rounded-full bg-primary-200 px-1.5 py-0.5 text-[10px] font-medium text-primary-700">
+              <span className="bg-primary-200 text-primary-700 ml-auto rounded-full px-1.5 py-0.5 text-[10px] font-medium">
                 Admin
               </span>
             )}

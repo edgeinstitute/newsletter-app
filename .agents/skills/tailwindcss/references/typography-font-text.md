@@ -93,7 +93,7 @@ Utilities for font styling, text color, line height, letter spacing, and decorat
 <p class="normal-case">Normal</p>
 
 <p class="truncate">Single line ellipsis</p>
-<p class="text-ellipsis overflow-hidden">Ellipsis</p>
+<p class="overflow-hidden text-ellipsis">Ellipsis</p>
 <p class="line-clamp-3">Clamp to 3 lines</p>
 ```
 

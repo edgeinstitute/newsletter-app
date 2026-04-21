@@ -16,10 +16,10 @@ export default async function ProfilePage() {
   if (!profile) redirect("/login");
 
   return (
-    <div className="flex flex-col gap-8 animate-fade-in-up">
+    <div className="animate-fade-in-up flex flex-col gap-8">
       <header>
-        <h1 className="font-display text-3xl text-foreground">Profilul meu</h1>
-        <p className="mt-1 text-sm text-text-secondary">
+        <h1 className="font-display text-foreground text-3xl">Profilul meu</h1>
+        <p className="text-text-secondary mt-1 text-sm">
           Gestionează datele contului și preferințele de securitate.
         </p>
       </header>

@@ -17,7 +17,7 @@ export async function UsersLoader({ currentUserId }: Props) {
 
   if (profilesErr) {
     return (
-      <div className="rounded-xs border border-danger-200 bg-danger-50 px-4 py-3 text-sm text-danger-700">
+      <div className="border-danger-200 bg-danger-50 text-danger-700 rounded-xs border px-4 py-3 text-sm">
         Nu am putut încărca membrii echipei: {profilesErr.message}
       </div>
     );

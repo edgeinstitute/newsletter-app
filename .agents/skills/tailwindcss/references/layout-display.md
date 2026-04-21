@@ -77,7 +77,7 @@ Use `contents` for a "phantom" container whose children act like direct children
 
 ```html
 <div class="hidden">Removed from document flow</div>
-<div class="md:block hidden">Visible only on md+</div>
+<div class="hidden md:block">Visible only on md+</div>
 ```
 
 For visual-only hiding while keeping in DOM, use `invisible` or `opacity-0` instead.

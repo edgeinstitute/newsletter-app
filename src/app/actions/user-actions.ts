@@ -4,9 +4,7 @@ import { revalidatePath } from "next/cache";
 import { getAdminClient } from "@/lib/supabase/admin";
 import { getUserId } from "@/lib/supabase/getUser";
 
-export type ActionResult =
-  | { ok: true }
-  | { ok: false; error: string };
+export type ActionResult = { ok: true } | { ok: false; error: string };
 
 export async function updateUserProfile(input: {
   full_name: string;
@@ -64,9 +62,7 @@ export async function deleteAvatar(): Promise<ActionResult> {
 
   const admin = getAdminClient();
 
-  const { data: list } = await admin.storage
-    .from("profile_photos")
-    .list(userId, { limit: 100 });
+  const { data: list } = await admin.storage.from("profile_photos").list(userId, { limit: 100 });
   if (list && list.length > 0) {
     const paths = list.map((f) => `${userId}/${f.name}`);
     await admin.storage.from("profile_photos").remove(paths);

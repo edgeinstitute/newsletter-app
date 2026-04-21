@@ -12,9 +12,7 @@ Tailwind includes a `dark` variant that lets you style your site differently whe
 Use the `dark:` variant to apply styles in dark mode:
 
 ```html
-<div class="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">
-  Content
-</div>
+<div class="bg-white text-gray-900 dark:bg-gray-800 dark:text-white">Content</div>
 ```
 
 ## Default Behavior
@@ -76,8 +74,7 @@ Support light mode, dark mode, and system preference:
 document.documentElement.classList.toggle(
   "dark",
   localStorage.theme === "dark" ||
-    (!("theme" in localStorage) && 
-     window.matchMedia("(prefers-color-scheme: dark)").matches)
+    (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
 );
 
 // Set light mode
@@ -92,7 +89,7 @@ document.documentElement.classList.add("dark");
 localStorage.removeItem("theme");
 document.documentElement.classList.toggle(
   "dark",
-  window.matchMedia("(prefers-color-scheme: dark)").matches
+  window.matchMedia("(prefers-color-scheme: dark)").matches,
 );
 ```
 
@@ -101,7 +98,7 @@ document.documentElement.classList.toggle(
 ### Cards
 
 ```html
-<div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-none">
+<div class="rounded-lg bg-white shadow-lg dark:bg-gray-800 dark:shadow-none">
   <h2 class="text-gray-900 dark:text-white">Title</h2>
   <p class="text-gray-500 dark:text-gray-400">Description</p>
 </div>
@@ -110,15 +107,13 @@ document.documentElement.classList.toggle(
 ### Borders
 
 ```html
-<div class="border border-gray-200 dark:border-gray-700">
-  Content
-</div>
+<div class="border border-gray-200 dark:border-gray-700">Content</div>
 ```
 
 ### Buttons
 
 ```html
-<button class="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white">
+<button class="bg-blue-500 text-white hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
   Button
 </button>
 ```

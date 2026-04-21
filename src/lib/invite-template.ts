@@ -71,10 +71,7 @@ export const TEMPLATE_VARIABLES: { key: string; label: string }[] = [
   { key: "appName", label: "Numele platformei" },
 ];
 
-export function renderTemplate(
-  template: string,
-  vars: Record<string, string>,
-): string {
+export function renderTemplate(template: string, vars: Record<string, string>): string {
   return template.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key: string) => vars[key] ?? "");
 }
 

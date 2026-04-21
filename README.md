@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# newsletter-app
 
-## Getting Started
+Internal admin panel for EDGE — team management, auth, profile, invites and settings.
 
-First, run the development server:
+## Stack
+
+- Next.js 16 (App Router, React Server Components, server actions) + Turbopack
+- React 19
+- TypeScript (strict, `noUncheckedIndexedAccess`)
+- Tailwind CSS v4 (CSS-first via `@theme inline` in [src/app/globals.css](src/app/globals.css))
+- Supabase (auth + Postgres) through `@supabase/ssr`
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # fill in values
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Required environment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+See [.env.example](.env.example). `SUPABASE_URL`, `SUPABASE_SECRET_KEY`, and `PLATFORM_ENCRYPTION_KEY` (32-byte hex) are required. `SUPABASE_PUBLISHABLE_KEY` is optional — when missing, the anon key is decrypted at runtime from the `settings` table via [src/lib/crypto.ts](src/lib/crypto.ts) (AES-256-GCM).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+`APP_URL` is used to build invite / reset-password links.
 
-## Learn More
+## Scripts
 
-To learn more about Next.js, take a look at the following resources:
+| Command                | What it does                                 |
+| ---------------------- | -------------------------------------------- |
+| `npm run dev`          | Local dev server (Turbopack)                 |
+| `npm run build`        | Production build (Turbopack)                 |
+| `npm run start`        | Run the production build                     |
+| `npm run typecheck`    | `tsc --noEmit`                               |
+| `npm run lint`         | ESLint                                       |
+| `npm run lint:fix`     | ESLint with autofix                          |
+| `npm run format`       | Prettier write                               |
+| `npm run format:check` | Prettier check                               |
+| `npm run check`        | typecheck + lint + format:check (pre-commit) |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **`src/app/`** — App Router. Auth routes (`login`, `forgot-password`, `auth/*`) live at the root. The authenticated shell is under the `(app)/` route group (dashboard, users, settings, profile).
+- **`src/proxy.ts`** — Next 16's renamed middleware. Strips inbound identity headers, validates the session on protected routes, and re-injects `x-user-id` / `x-user-email` / `x-user-name` for server components to read.
+- **`src/lib/supabase/`**
+  - `admin.ts` — service-role client, server-only, `React.cache`'d
+  - `dynamic.ts` — anon-key SSR client for server components and middleware; resolves the anon key from env or (fallback) decrypts from the `settings` table
+- **`src/providers/SupabaseProvider.tsx`** — browser client via React context (used by client components that need the Supabase JS SDK)
+- **Server actions** return `ActionResult<T> = { ok: true; data: T } | { ok: false; error: string }`. Keep this shape when adding new actions.
 
-## Deploy on Vercel
+## Theme
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Editorial neutral palette — off-white (`#fafaf9`) surfaces, near-black (`#0a0a0a`) foreground, thin warm-gray borders. Tokens are defined in [src/app/globals.css](src/app/globals.css) and exposed to Tailwind via `@theme inline`. Use the tokens (`bg-surface`, `text-foreground`, `border-border`, `text-text-secondary`, `bg-primary`, …) rather than reintroducing warm/cream hues or decorative color accents.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy
+
+Deployed on Vercel. The only prerequisite is setting the required env vars in the Vercel project settings.

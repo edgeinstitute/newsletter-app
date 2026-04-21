@@ -51,13 +51,13 @@ export function SetupPasswordClient() {
   };
 
   return (
-    <main className="flex min-h-[100svh] items-center justify-center bg-surface px-4 py-12">
-      <div className="w-full max-w-md animate-fade-in-up">
+    <main className="bg-surface flex min-h-[100svh] items-center justify-center px-4 py-12">
+      <div className="animate-fade-in-up w-full max-w-md">
         <div className="mb-8 text-center">
-          <h1 className="font-display text-3xl text-foreground">
+          <h1 className="font-display text-foreground text-3xl">
             {isRecovery ? "Resetează parola" : "Bine ai venit"}
           </h1>
-          <p className="mt-2 text-sm text-text-secondary">
+          <p className="text-text-secondary mt-2 text-sm">
             {isRecovery
               ? "Alege o parolă nouă pentru contul tău"
               : "Setează parola pentru a activa contul"}
@@ -66,12 +66,12 @@ export function SetupPasswordClient() {
 
         <form
           onSubmit={onSubmit}
-          className="rounded-xs border border-border bg-surface-elevated p-6 shadow-sm"
+          className="border-border bg-surface-elevated rounded-xs border p-6 shadow-sm"
           noValidate
         >
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <label htmlFor="password" className="text-sm font-medium text-text-secondary">
+              <label htmlFor="password" className="text-text-secondary text-sm font-medium">
                 Parolă nouă
               </label>
               <input
@@ -81,7 +81,7 @@ export function SetupPasswordClient() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-10 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+                className="border-border bg-surface text-foreground hover:border-primary focus:border-primary h-10 rounded-xs border px-3 text-sm transition focus:outline-none"
               />
               <div className="mt-2 flex gap-1">
                 {[0, 1, 2, 3].map((i) => (
@@ -99,13 +99,11 @@ export function SetupPasswordClient() {
                   />
                 ))}
               </div>
-              {password && (
-                <p className="text-xs text-text-muted">Siguranță: {strength.label}</p>
-              )}
+              {password && <p className="text-text-muted text-xs">Siguranță: {strength.label}</p>}
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="confirm" className="text-sm font-medium text-text-secondary">
+              <label htmlFor="confirm" className="text-text-secondary text-sm font-medium">
                 Confirmă parola
               </label>
               <input
@@ -115,12 +113,12 @@ export function SetupPasswordClient() {
                 required
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}
-                className="h-10 rounded-xs border border-border bg-surface px-3 text-sm text-foreground transition hover:border-primary focus:border-primary focus:outline-none"
+                className="border-border bg-surface text-foreground hover:border-primary focus:border-primary h-10 rounded-xs border px-3 text-sm transition focus:outline-none"
               />
             </div>
 
             {error && (
-              <div className="rounded-xs border border-danger-200 bg-danger-50 px-3 py-2 text-xs text-danger-700">
+              <div className="border-danger-200 bg-danger-50 text-danger-700 rounded-xs border px-3 py-2 text-xs">
                 {error}
               </div>
             )}
@@ -128,7 +126,7 @@ export function SetupPasswordClient() {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-xs bg-primary text-sm font-medium text-text-inverse transition hover:bg-primary-600 disabled:cursor-not-allowed disabled:opacity-60"
+              className="bg-primary text-text-inverse hover:bg-primary-600 inline-flex h-10 items-center justify-center gap-2 rounded-xs text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-60"
             >
               {submitting && <SpinnerIcon className="h-4 w-4" />}
               {isRecovery ? "Schimbă parola" : "Activează contul"}

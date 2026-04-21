@@ -13,7 +13,7 @@ Utilities for CSS Grid layouts: columns, rows, gap, and item placement.
 
 ```html
 <div class="grid grid-cols-3 gap-4">3 equal columns</div>
-<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">Responsive</div>
+<div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">Responsive</div>
 <div class="grid grid-cols-none">No explicit tracks</div>
 
 <div class="grid grid-rows-3 gap-2">3 rows</div>
@@ -31,7 +31,10 @@ Utilities for CSS Grid layouts: columns, rows, gap, and item placement.
 
 ```html
 <div class="grid grid-cols-4 gap-4">
-  <div>01</div><div>02</div><div>03</div><div>04</div>
+  <div>01</div>
+  <div>02</div>
+  <div>03</div>
+  <div>04</div>
   <div>05</div>
   <div class="col-span-3 grid grid-cols-subgrid gap-4">
     <div class="col-start-2">06</div>

@@ -4,9 +4,7 @@ import { getDynamicMiddlewareClient } from "@/lib/supabase/dynamic";
 const PROTECTED_PREFIXES = ["/dashboard", "/users", "/settings", "/profile"];
 
 function isProtected(pathname: string): boolean {
-  return PROTECTED_PREFIXES.some(
-    (p) => pathname === p || pathname.startsWith(`${p}/`),
-  );
+  return PROTECTED_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 }
 
 export async function proxy(request: NextRequest) {
@@ -52,5 +50,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
+  ],
 };

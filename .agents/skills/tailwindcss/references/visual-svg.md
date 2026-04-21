@@ -45,7 +45,7 @@ Utilities for styling SVG fill and stroke. Essential when working with icon sets
 </button>
 
 <!-- Special values -->
-<svg class="stroke-none stroke-inherit stroke-transparent">...</svg>
+<svg class="stroke-inherit stroke-none stroke-transparent">...</svg>
 ```
 
 ### Stroke width

@@ -2,10 +2,7 @@ import { redirect } from "next/navigation";
 import { getUserInfo } from "@/lib/supabase/getUser";
 import { getAdminClient } from "@/lib/supabase/admin";
 import { getProfileCached } from "@/lib/queries/profile";
-import {
-  getInviteTemplateOrDefault,
-  getMailgunConfigPublic,
-} from "@/lib/queries/settings";
+import { getInviteTemplateOrDefault, getMailgunConfigPublic } from "@/lib/queries/settings";
 import { SettingsView } from "./_components/SettingsView";
 
 export default async function SettingsPage() {
@@ -22,10 +19,10 @@ export default async function SettingsPage() {
   ]);
 
   return (
-    <div className="flex flex-col gap-6 animate-fade-in-up">
+    <div className="animate-fade-in-up flex flex-col gap-6">
       <header>
-        <h1 className="font-display text-3xl text-foreground">Setări</h1>
-        <p className="mt-1 text-sm text-text-secondary">
+        <h1 className="font-display text-foreground text-3xl">Setări</h1>
+        <p className="text-text-secondary mt-1 text-sm">
           Configurează integrările platformei și template-urile de email.
         </p>
       </header>

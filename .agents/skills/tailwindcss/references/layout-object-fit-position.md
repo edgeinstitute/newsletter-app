@@ -44,7 +44,7 @@ Utilities for controlling how replaced elements like `<img>` and `<video>` are r
 ### Responsive
 
 ```html
-<img class="object-contain md:object-cover object-center md:object-top" src="photo.jpg" />
+<img class="object-contain object-center md:object-cover md:object-top" src="photo.jpg" />
 ```
 
 ## Key Points
